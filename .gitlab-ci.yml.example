@@ -1,0 +1,9 @@
+chronos:
+  #image: image
+  #tags:
+  #  - runner
+  before_script:
+    - bundle install
+  script: bundle exec ruby ./chronos.rb
+  only:
+    - schedules
