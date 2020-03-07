@@ -30,8 +30,12 @@ REDMINE_API_ACCESS_TOKEN
 REDMINE_API_BASE_URL
 ```
 
+![environment variables](https://github.com/haydenmcfarland/assets/blob/master/images/chronos_env_example.png?raw=true)
+
 Create a Gitlab scheduled pipeline and then run the job manually to test.
 It is suggested to run the time tracking job two times during the work day.
+
+![scheduled job](https://github.com/haydenmcfarland/assets/blob/master/images/chronos_scheduled_job_example.png?raw=true)
 
 # How to use
 
