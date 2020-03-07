@@ -2,6 +2,10 @@
 
 ![chronos](https://github.com/haydenmcfarland/assets/blob/master/images/chronos.png?raw=true)
 
+# Why?
+
+Lazy.
+
 # What?
 
 chronos is a simple script that can be executed in a Gitlab scheduled pipeline to parse merge requests for time tracking purposes. Currently, chronos only integrates with Redmine.
