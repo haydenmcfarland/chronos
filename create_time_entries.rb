@@ -9,7 +9,7 @@ module Chronos
 
     def resolve_issue(merge_request)
       (merge_request.source_branch[ISSUE_REGEX, 1] ||
-      merge_request.title[ISSUE_REGEX, 1]).to_i
+        merge_request.title[ISSUE_REGEX, 1]).to_i
     end
 
     # responsible for determining chronos behavior from mr description
