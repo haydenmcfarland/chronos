@@ -30,7 +30,7 @@ module Chronos
     end
 
     def my_chronos_merge_requests(dt_start, dt_end)
-      Gitlab::MergeREquests.call(dt_start, dt_end).map do |merge_request|
+      Gitlab::MergeRequests.call(dt_start, dt_end).map do |merge_request|
         issue_id = resolve_issue(merge_request)
         next if issue_id.zero?
 
