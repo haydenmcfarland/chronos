@@ -5,8 +5,8 @@ module Chronos
     module_function
 
     def load_credentials
-      Chronos::Constants::SERVICES.each do |service|
-        Chronos::Constants::CONFIGS.each do |config|
+      Constants::SERVICES.each do |service|
+        Constants::CONFIGS.each do |config|
           assign_service_config(service, config)
         end
       end

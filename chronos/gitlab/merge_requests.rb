@@ -2,17 +2,10 @@
 
 module Chronos
   module Gitlab
-    module Request
+    module MergeRequests
       module_function
 
-      def load_credentials
-        endpoint = "https://#{Chronos::Configuration.gitlab_api_base_url}"
-        ::Gitlab.endpoint = endpoint
-        ::Gitlab.private_token = Chronos::Configuration.gitlab_api_access_token
-      end
-
-      def my_merge_requests(dt_start, dt_end)
-        load_credentials
+      def call(dt_start, dt_end)
         ::Gitlab.user_merge_requests(
           {
             created_before: dt_end,
