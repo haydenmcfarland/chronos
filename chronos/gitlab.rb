@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'gitlab'
+
 module Chronos
   module Gitlab
     module_function

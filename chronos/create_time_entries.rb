@@ -49,9 +49,6 @@ module Chronos
     end
 
     def call
-      Configuration.load_credentials
-      Chronos::Gitlab.load_credentials
-
       # get the current week window
       now = DateTime.parse(Date.today.to_s)
       dt_start = (now - now.wday)
