@@ -2,8 +2,8 @@
 
 module Chronos
   module CreateTimeEntries
-    ISSUE_REGEX = Chronos::Constants::ISSUE_REGEX
-    CHRONOS_REGEX = Chronos::Constants::CHRONOS_REGEX
+    ISSUE_REGEX = Constants::ISSUE_REGEX
+    CHRONOS_REGEX = Constants::CHRONOS_REGEX
 
     module_function
 
@@ -18,8 +18,7 @@ module Chronos
     end
 
     def my_issue_times(from, to)
-      Chronos::Redmine::TimeEntries
-        .my_time_entries(from, to).each_with_object({}) do |r, h|
+      Redmine::TimeEntries.call(from, to).each_with_object({}) do |r, h|
         issue = r['issue']
         next unless issue
 
@@ -31,8 +30,7 @@ module Chronos
     end
 
     def my_chronos_merge_requests(dt_start, dt_end)
-      Chronos::Gitlab::Request
-        .my_merge_requests(dt_start, dt_end).map do |merge_request|
+      Gitlab::MergeRequests.call(dt_start, dt_end).map do |merge_request|
         issue_id = resolve_issue(merge_request)
         next if issue_id.zero?
 
@@ -51,25 +49,17 @@ module Chronos
     end
 
     def call
-      Chronos::Configuration.load_credentials
-
       # get the current week window
       now = DateTime.parse(Date.today.to_s)
       dt_start = (now - now.wday)
-      dt_end = dt_start + Chronos::Constants::WEEK_OFFSET
+      dt_end = dt_start + Constants::WEEK_OFFSET
 
       # get open issue ids
-      my_issue_ids = Chronos::Redmine::Issues.my_issue_ids
-      my_issue_times = my_issue_times(
-        dt_start,
-        dt_end
-      )
+      my_issue_ids = Redmine::Issues.my_issue_ids
+      my_issue_times = my_issue_times(dt_start, dt_end)
 
       # set default time for issues
-      my_issue_ids.each do |id|
-        my_issue_times[id.to_i] ||= dt_start
-      end
-
+      my_issue_ids.each { |id| my_issue_times[id.to_i] ||= dt_start }
       my_chronos_merge_requests(dt_start, dt_end).each do |merge_request|
         id = merge_request[:issue_id]
         time = my_issue_times[id]
@@ -78,11 +68,10 @@ module Chronos
         hours = merge_request[:hours]
         if merge_request[:created_at] > time ||
            merge_request[:updated_at] > time
-          puts Chronos::Constants::CREATE_MESSAGE % merge_request[:title]
-          puts Chronos::Redmine::TimeEntries
-            .create_time_entry(id, hours).body
+          puts Constants::CREATE_MESSAGE % merge_request[:title]
+          puts Redmine::CreateTimeEntries.call(id, hours).body
         else
-          puts Chronos::Constants::EXISTS_MESSAGE % id
+          puts Constants::EXISTS_MESSAGE % id
         end
       end
     end

@@ -8,5 +8,3 @@ require 'json'
 Dir[File.dirname(__FILE__) + '/**/*.rb']
   .sort.reject { |file| file.include?('chronos.rb') }
   .each { |file| require file }
-
-Chronos::CreateTimeEntries.call
