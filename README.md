@@ -12,14 +12,13 @@ chronos is a simple script that can be executed in a Gitlab scheduled pipeline t
 
 # How to setup
 
-Create a personal project in Gitlab and utilize the import project mechanism to create a new repository from this project.
-Then create a `.gitlab-ci.yml` from the provided example:
+Create a new repo and import this project as a submodule and then create a `.gitlab-ci.yml` from the provided example:
 
 ```
-cp .gitlab-ci.yml.example .gitlab-ci.yml
+git submodule add --force https://github.com/haydenmcfarland/chronos code
+git submodule update --init --force --remote
+cp code/.gitlab-ci.yml.example .gitlab-ci.yml
 ```
-
-I would suggest adding an image and tag a specific runner.
 
 Once you have a valid `.gitlab-ci.yml`, set the following environment variables for the chronos project:
 
@@ -37,6 +36,16 @@ It is suggested to run the time tracking job two times during the work day.
 
 ![scheduled job](https://github.com/haydenmcfarland/assets/blob/master/images/chronos_scheduled_job_example.png?raw=true)
 
+Create a ruby script that loads that requires the submodule code, loads credentials, and calls the service:
+
+```ruby
+require_relative 'code/chronos.rb'
+
+Chronos::Configuration.load_credentials
+Chronos::Gitlab.load_credentials
+Chronos::CreateTimeEntries.call
+
+```
 # How to use
 
 The following must be done in order for time tracking to be possible:
