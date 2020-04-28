@@ -1,9 +1,12 @@
 chronos:
-  #image: image
+  #image:
   #tags:
-  #  - runner
   before_script:
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
+  script: 
+    - cd code
     - bundle install
-  script: bundle exec ruby ./chronos.rb
+    - bundle exec ruby ../script.rb
   only:
     - schedules
