@@ -36,7 +36,7 @@ It is suggested to run the time tracking job two times during the work day.
 
 ![scheduled job](https://github.com/haydenmcfarland/assets/blob/master/images/chronos_scheduled_job_example.png?raw=true)
 
-Create a ruby script that loads that requires the submodule code, loads credentials, and calls the service:
+Create a ruby script that loads the submodule code, loads credentials, and calls the service:
 
 ```ruby
 require_relative 'code/chronos.rb'
