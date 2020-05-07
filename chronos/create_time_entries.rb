@@ -56,13 +56,13 @@ module Chronos
 
       # get open issue ids
       my_issue_ids = Redmine::Issues.my_issue_ids
-      my_issue_times = my_issue_times(dt_start, dt_end)
+      my_issue_times_result = my_issue_times(dt_start, dt_end)
 
       # set default time for issues
-      my_issue_ids.each { |id| my_issue_times[id.to_i] ||= dt_start }
+      my_issue_ids.each { |id| my_issue_times_result[id.to_i] ||= dt_start }
       my_chronos_merge_requests(dt_start, dt_end).each do |merge_request|
         id = merge_request[:issue_id]
-        time = my_issue_times[id]
+        time = my_issue_times_result[id]
         next unless time
 
         hours = merge_request[:hours]
