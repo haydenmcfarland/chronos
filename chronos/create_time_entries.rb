@@ -2,19 +2,16 @@
 
 module Chronos
   module CreateTimeEntries
-    ISSUE_REGEX = Constants::ISSUE_REGEX
-    CHRONOS_REGEX = Constants::CHRONOS_REGEX
-
     module_function
 
     def resolve_issue(merge_request)
-      (merge_request.source_branch[ISSUE_REGEX, 1] ||
-        merge_request.title[ISSUE_REGEX, 1]).to_i
+      (merge_request.source_branch[Constants::ISSUE_REGEX, 1] ||
+        merge_request.title[Constants::ISSUE_REGEX, 1]).to_i
     end
 
     # responsible for determining chronos behavior from mr description
     def resolve_chronos_command(description)
-      description[CHRONOS_REGEX, 1].to_i
+      description[Constants::CHRONOS_REGEX, 1].to_i
     end
 
     def my_issue_times(from, to)
